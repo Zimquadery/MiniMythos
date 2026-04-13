@@ -12,7 +12,7 @@ class AgentResult:
 
 
 class AgentRunner:
-    def __init__(self, command: str | list[str], max_parallel: int = 4):
+    def __init__(self, command: str | list[str], max_parallel: int = 5):
         if isinstance(command, str):
             self._command_prefix = [command]
         else:

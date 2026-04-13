@@ -1,29 +1,3 @@
-Metadata-Version: 2.4
-Name: minimythos
-Version: 0.1.0
-Summary: AI Security Boss — orchestrates headless agents to find proven security bugs
-Author: Zimquadery
-License-Expression: MIT
-Project-URL: Homepage, https://github.com/Zimquadery/MiniMythos
-Project-URL: Repository, https://github.com/Zimquadery/MiniMythos
-Project-URL: Issues, https://github.com/Zimquadery/MiniMythos/issues
-Classifier: Development Status :: 3 - Alpha
-Classifier: Intended Audience :: Developers
-Classifier: Programming Language :: Python :: 3
-Classifier: Programming Language :: Python :: 3.11
-Classifier: Programming Language :: Python :: 3.12
-Classifier: Programming Language :: Python :: 3.13
-Classifier: Topic :: Security
-Requires-Python: >=3.11
-Description-Content-Type: text/markdown
-License-File: LICENSE
-Requires-Dist: rich>=13.0.0
-Requires-Dist: pydantic>=2.0.0
-Provides-Extra: dev
-Requires-Dist: pytest>=8.0; extra == "dev"
-Requires-Dist: pytest-asyncio>=0.23; extra == "dev"
-Dynamic: license-file
-
 # MiniMythos
 
 AI Security Boss — orchestrates headless agents to find proven security bugs.
