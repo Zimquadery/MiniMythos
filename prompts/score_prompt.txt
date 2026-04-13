@@ -1,0 +1,3 @@
+DUMMY SCORE PROMPT — Review the following files for security vulnerability likelihood:
+{file_list}
+Rate each file from 1 (unlikely) to 10 (highly likely) to contain security bugs. Output JSON array: [{"path": "...", "score": N, "reason": "..."}]

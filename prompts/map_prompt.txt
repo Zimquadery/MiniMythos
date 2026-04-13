@@ -1,0 +1,1 @@
+DUMMY MAP PROMPT — Analyze the codebase at {target_path} and produce a file dependency map showing how files connect and import each other. Focus on cross-file interactions where security bugs are most likely.

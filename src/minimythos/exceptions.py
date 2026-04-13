@@ -1,0 +1,2 @@
+class PipelineAbort(Exception):
+    pass
