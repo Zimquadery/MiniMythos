@@ -65,7 +65,7 @@ async def test_orchestrator_halts_on_pipeline_abort(tmp_codebase, tmp_path):
             AgentResult(stdout="", stderr="fail", return_code=1, success=False)
         ]
     )
-    mock_runner._command_prefix = ["echo"]
+    mock_runner._raw_command = ["echo"]
     mock_runner.semaphore = MagicMock()
     orch.runner = mock_runner
 

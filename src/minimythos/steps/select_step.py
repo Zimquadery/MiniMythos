@@ -41,7 +41,7 @@ class SelectStep(Step):
 
         if not score_file.exists():
             raise PipelineAbort(
-                "vulnerability_score.json not found — cannot select files"
+                "vulnerability_score.json not found - cannot select files"
             )
 
         data = json.loads(score_file.read_text())

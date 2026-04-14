@@ -12,10 +12,12 @@ def print_step_header(step_name: str, description: str) -> None:
 
 
 def print_step_result(step_name: str, success: bool, detail: str = "") -> None:
-    status = "[bold green]✓[/bold green]" if success else "[bold red]✗[/bold red]"
+    status = (
+        "[bold green][OK][/bold green]" if success else "[bold red][FAIL][/bold red]"
+    )
     msg = f"{status} {step_name}"
     if detail:
-        msg += f" — {detail}"
+        msg += f" - {detail}"
     console.print(msg)
 
 

@@ -1,1 +1,1 @@
-DUMMY ATTACK PROMPT — Focus on file {file_path} in the codebase. Guess potential security vulnerabilities, write tests to prove them, and run those tests. Output a JSON report: {"vulnerabilities": [...], "evidence": "..."}
+Focus on file {file_path} in the codebase. Guess potential security vulnerabilities, write tests to prove them, and run those tests. Output a JSON report: {"vulnerabilities": [...], "evidence": "..."}

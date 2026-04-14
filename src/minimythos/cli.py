@@ -15,7 +15,7 @@ console = Console()
 
 PROG = "minimythos"
 DESCRIPTION = (
-    "AI Security Boss — orchestrates headless agents to find proven security bugs."
+    "AI Security Boss - orchestrates headless agents to find proven security bugs."
 )
 USAGE = f"%(prog)s [target] [options]"
 
@@ -115,7 +115,7 @@ def scan(
         output_dir=output.resolve() if output else target,
     )
 
-    console.rule("[bold red]MiniMythos — AI Security Boss[/bold red]")
+    console.rule("[bold red]MiniMythos - AI Security Boss[/bold red]")
     console.print(f"Target: {settings.target_path}")
     console.print(f"Agent:  {settings.agent_command}")
     console.print(f"Output: {settings.output_dir}")
