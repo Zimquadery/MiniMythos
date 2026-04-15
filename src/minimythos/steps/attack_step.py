@@ -5,7 +5,8 @@ from minimythos.config import Settings
 from minimythos.agents.runner import AgentRunner
 from minimythos.models.report import AgentReport, VulnerabilityGuess
 from minimythos.steps.select_step import remove_worktree
-from minimythos.utils.display import print_error
+from minimythos.utils.display import console, print_error
+from minimythos.utils.json_utils import parse_json_output
 
 
 class AttackStep(Step):
@@ -49,11 +50,16 @@ class AttackStep(Step):
 
                 if result.success:
                     try:
-                        parsed = json.loads(result.stdout)
+                        parsed = parse_json_output(result.stdout)
                         vuln_data = parsed.get("vulnerabilities", [])
                         for v in vuln_data:
                             vulnerabilities.append(VulnerabilityGuess(**v))
                     except (json.JSONDecodeError, Exception):
+                        snippet = result.stdout[:200] if result.stdout else "(empty)"
+                        console.print(
+                            f"[yellow]Warning: Failed to parse attack result for {entry['file_path']}[/yellow]"
+                        )
+                        console.print(f"[dim]  Raw output: {snippet}[/dim]")
                         success = False
 
                 report = AgentReport(

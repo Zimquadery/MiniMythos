@@ -1,6 +1,7 @@
 from pathlib import Path
 import pytest
 from minimythos.utils.files import discover_code_files, batch_files, group_by_directory
+from minimythos.utils.json_utils import parse_json_output
 
 
 def test_discover_finds_code_files(tmp_path: Path):
@@ -85,3 +86,40 @@ def test_batch_files_respects_batch_size():
     assert len(batches[0]) == 10
     assert len(batches[1]) == 10
     assert len(batches[2]) == 5
+
+
+def test_parse_json_raw():
+    assert parse_json_output('[{"a": 1}]') == [{"a": 1}]
+
+
+def test_parse_json_markdown_fences():
+    raw = '```json\n[{"a": 1}]\n```'
+    assert parse_json_output(raw) == [{"a": 1}]
+
+
+def test_parse_json_surrounding_text():
+    raw = 'Here is the result:\n[{"a": 1}]\nDone.'
+    assert parse_json_output(raw) == [{"a": 1}]
+
+
+def test_parse_json_object():
+    raw = '```json\n{"key": "value"}\n```'
+    assert parse_json_output(raw) == {"key": "value"}
+
+
+def test_parse_json_object_with_surrounding_text():
+    raw = 'Some preamble\n{"key": "value"}\nSome postamble'
+    assert parse_json_output(raw) == {"key": "value"}
+
+
+def test_parse_json_output_handles_fences():
+    raw = '```json\n[{"path": "a.py", "score": 5, "reason": "ok"}]\n```'
+    result = parse_json_output(raw)
+    assert result[0]["score"] == 5
+
+
+def test_parse_json_output_raises_on_garbage():
+    import pytest
+
+    with pytest.raises(Exception):
+        parse_json_output("not json at all")

@@ -119,3 +119,41 @@ async def test_attack_step_cleans_up_worktrees(default_settings):
         step = AttackStep(default_settings, runner)
         await step.run()
         mock_rm.assert_called()
+
+
+@pytest.mark.asyncio
+async def test_attack_step_parses_markdown_fenced_json(default_settings):
+    output_dir = default_settings.output_dir
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    selected = [
+        {
+            "file_path": "src/main.py",
+            "score": 8,
+            "worktree_path": str(default_settings.output_dir / "wt0"),
+        }
+    ]
+    (output_dir / "selected_files.json").write_text(json.dumps(selected))
+
+    fenced = (
+        "```json\n"
+        '{"vulnerabilities": [{"title": "XSS", "description": "reflected", '
+        '"file_path": "src/main.py", "line_range": "5-10", '
+        '"severity": "high", "proof": "alert(1)"}], "evidence": "test"}\n'
+        "```"
+    )
+
+    runner = AsyncMock(spec=AgentRunner)
+    runner.run_parallel = AsyncMock(
+        return_value=[
+            AgentResult(stdout=fenced, stderr="", return_code=0, success=True)
+        ]
+    )
+
+    with patch("minimythos.steps.attack_step.remove_worktree", return_value=True):
+        step = AttackStep(default_settings, runner)
+        reports = await step.run()
+
+    assert len(reports) == 1
+    assert reports[0].success is True
+    assert reports[0].vulnerabilities[0].title == "XSS"

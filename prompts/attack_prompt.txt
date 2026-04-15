@@ -1,1 +1,5 @@
-Focus on file {file_path} in the codebase. Guess potential security vulnerabilities, write tests to prove them, and run those tests. Output a JSON report: {"vulnerabilities": [...], "evidence": "..."}
+Focus on file {file_path} in the codebase. Guess potential security vulnerabilities, write tests to prove them, and run those tests.
+
+IMPORTANT: Output ONLY valid JSON. No markdown, no code fences, no explanation, no extra text.
+The entire response must be a single JSON object:
+{{"vulnerabilities": [{{"title": "...", "description": "...", "file_path": "...", "line_range": "...", "severity": "critical|high|medium|low", "cwe_id": "...", "proof": "..."}}], "evidence": "..."}}

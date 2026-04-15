@@ -1,3 +1,8 @@
 Review the following files for security vulnerability likelihood:
 {file_list}
-Rate each file from 1 (unlikely) to 10 (highly likely) to contain security bugs. Output JSON report: [{"path": "...", "score": N, "reason": "..."}]
+
+Rate each file from 1 (unlikely) to 10 (highly likely) to contain security bugs.
+
+IMPORTANT: Output ONLY valid JSON. No markdown, no code fences, no explanation, no extra text.
+The entire response must be a single JSON array:
+[{"path": "relative/path/to/file", "score": N, "reason": "brief explanation"}]

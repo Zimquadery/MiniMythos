@@ -6,6 +6,7 @@ from minimythos.agents.runner import AgentRunner
 from minimythos.models.file_score import FileScore, ScoreBatch, VulnerabilityScoreFile
 from minimythos.utils.files import discover_code_files, batch_files
 from minimythos.utils.display import console, print_error
+from minimythos.utils.json_utils import parse_json_output
 from minimythos.exceptions import PipelineAbort
 
 
@@ -45,13 +46,15 @@ class ScoreStep(Step):
             if result.success:
                 any_agent_succeeded = True
                 try:
-                    parsed = json.loads(result.stdout)
+                    parsed = parse_json_output(result.stdout)
                     for item in parsed:
                         scores.append(FileScore(**item))
                 except (json.JSONDecodeError, Exception):
+                    snippet = result.stdout[:200] if result.stdout else "(empty)"
                     console.print(
                         f"[yellow]Warning: Failed to parse scores for batch {i}, assigning 0[/yellow]"
                     )
+                    console.print(f"[dim]  Raw output: {snippet}[/dim]")
                     for f in batch:
                         scores.append(
                             FileScore(path=str(f), score=0, reason="Parsing failed")
